@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>v17 State 2 Results Explorer</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="app-header">
+    <div>
+      <div class="eyebrow">Regulation State 2</div>
+      <h1>v17 Results Explorer</h1>
+    </div>
+    <div class="header-meta">
+      <span id="artifactStamp"></span>
+      <span class="status-dot"></span>
+    </div>
+  </header>
+
+  <main>
+    <section class="control-band">
+      <label>
+        Horizon
+        <select id="horizonSelect"></select>
+      </label>
+      <label>
+        Month
+        <select id="monthSelect"></select>
+      </label>
+      <div class="summary-strip" id="summaryStrip"></div>
+    </section>
+
+    <section class="grid overview-grid">
+      <article class="panel full feature-panel">
+        <div class="panel-head">
+          <div>
+            <h2>F1 Score by Forecast Horizon</h2>
+            <p>Model versus persistence and previous-day baselines.</p>
+          </div>
+        </div>
+        <div id="f1Chart" class="chart chart-tall"></div>
+      </article>
+
+      <article class="panel">
+        <div class="panel-head">
+          <div>
+            <h2>Headline</h2>
+            <p>Walk-forward audit, all of 2025.</p>
+          </div>
+        </div>
+        <div class="metric-stack" id="headlineMetrics"></div>
+      </article>
+    </section>
+
+    <section class="grid">
+      <article class="panel wide">
+        <div class="panel-head">
+          <div>
+            <h2>Monthly F1 Lift</h2>
+            <p>Lift over the stronger baseline per month and horizon.</p>
+          </div>
+        </div>
+        <div id="heatmap" class="chart chart-heatmap"></div>
+      </article>
+
+      <article class="panel">
+        <div class="panel-head">
+          <div>
+            <h2>Confusion Mix</h2>
+            <p>Selected horizon, full audit window.</p>
+          </div>
+        </div>
+        <div id="confusionPanel" class="confusion-panel"></div>
+      </article>
+    </section>
+
+    <section class="grid">
+      <article class="panel wide">
+        <div class="panel-head">
+          <div>
+            <h2>Prediction Snapshot</h2>
+            <p id="snapshotTitle">Selectable prediction timeline.</p>
+          </div>
+          <div class="mini-stats" id="snapshotStats"></div>
+        </div>
+        <div class="snapshot-controls">
+          <label>
+            Start
+            <input id="snapshotStart" type="datetime-local" step="900">
+          </label>
+          <label>
+            End
+            <input id="snapshotEnd" type="datetime-local" step="900">
+          </label>
+          <div class="button-row">
+            <button type="button" data-range-hours="24">24h</button>
+            <button type="button" data-range-hours="48">48h</button>
+            <button type="button" data-range-days="7">7d</button>
+            <button type="button" id="monthRangeButton">Month</button>
+            <button type="button" id="eventfulRangeButton">Eventful 48h</button>
+          </div>
+        </div>
+        <div class="inline-date-picker">
+          <div class="calendar-toolbar">
+            <button type="button" id="calendarPrev" aria-label="Previous month">‹</button>
+            <strong id="calendarMonthLabel"></strong>
+            <button type="button" id="calendarNext" aria-label="Next month">›</button>
+            <span id="rangePickHint"></span>
+          </div>
+          <div class="date-grid" id="dateGrid"></div>
+        </div>
+        <div id="snapshotChart" class="chart chart-tall"></div>
+      </article>
+
+      <article class="panel">
+        <div class="panel-head">
+          <div>
+            <h2>Threshold Shape</h2>
+            <p>Precision, recall and F1 across thresholds.</p>
+          </div>
+        </div>
+        <div id="thresholdChart" class="chart"></div>
+      </article>
+    </section>
+
+    <section class="grid">
+      <article class="panel">
+        <div class="panel-head">
+          <div>
+            <h2>Calibration</h2>
+            <p>Predicted probability versus observed event rate.</p>
+          </div>
+        </div>
+        <div id="calibrationChart" class="chart"></div>
+      </article>
+
+      <article class="panel wide">
+        <div class="panel-head">
+          <div>
+            <h2>Feature Evidence</h2>
+            <p>Top individual gain features and grouped value tests.</p>
+          </div>
+          <div class="feature-controls">
+            <label>
+              Top
+              <select id="featureCountSelect">
+                <option value="10">10</option>
+                <option value="20" selected>20</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+              </select>
+            </label>
+            <label>
+              Category
+              <select id="featureCategorySelect"></select>
+            </label>
+            <label class="checkbox-label">
+              <input id="forecastOnlyToggle" type="checkbox">
+              Forecasted only
+            </label>
+          </div>
+        </div>
+        <div class="feature-layout">
+          <div id="featureBars" class="chart feature-bars"></div>
+          <div id="categoryBars" class="chart category-bars"></div>
+        </div>
+      </article>
+    </section>
+
+    <section class="grid">
+      <article class="panel full">
+        <div class="panel-head">
+          <div>
+            <h2>Feature-Set Ablation</h2>
+            <p>Fixed split comparison used to select the final candidate.</p>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table id="ablationTable"></table>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <script src="data/results.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
