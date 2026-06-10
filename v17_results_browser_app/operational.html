@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>State 2 Operational Desk</title>
+  <link rel="stylesheet" href="operational.css">
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <div class="eyebrow">Regulation State 2</div>
+      <h1>Operational Desk</h1>
+    </div>
+    <nav class="topnav" aria-label="Dashboard views">
+      <a href="index.html">Model audit</a>
+      <a class="active" href="operational.html">Operational desk</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="control-strip" aria-label="Operating controls">
+      <label>
+        Operating time
+        <input id="decisionTime" type="datetime-local" step="900">
+      </label>
+      <label>
+        Portfolio posture
+        <select id="postureSelect">
+          <option value="balanced">Balanced</option>
+          <option value="long">Long energy</option>
+          <option value="short">Short energy</option>
+          <option value="bsp">BSP flexibility</option>
+        </select>
+      </label>
+      <label>
+        Alert level
+        <input id="alertThreshold" type="range" min="20" max="70" step="1" value="40">
+      </label>
+      <label>
+        Open position
+        <input id="exposureInput" type="number" min="0" step="1" value="10">
+      </label>
+      <div class="button-group" aria-label="Time presets">
+        <button type="button" id="prevButton" title="Previous interval">‹</button>
+        <button type="button" id="nextButton" title="Next interval">›</button>
+        <button type="button" id="nowButton">Latest</button>
+        <button type="button" id="eventButton">High risk</button>
+      </div>
+    </section>
+
+    <section class="summary-grid" aria-label="Decision summary">
+      <article class="summary-card">
+        <span>Next interval</span>
+        <strong id="nextProbability">--</strong>
+        <small id="nextDetail">--</small>
+      </article>
+      <article class="summary-card">
+        <span>Peak 2h risk</span>
+        <strong id="peakProbability">--</strong>
+        <small id="peakDetail">--</small>
+      </article>
+      <article class="summary-card">
+        <span>Triggered intervals</span>
+        <strong id="triggeredCount">--</strong>
+        <small id="triggeredDetail">--</small>
+      </article>
+      <article class="summary-card">
+        <span>Position at risk</span>
+        <strong id="riskMwh">--</strong>
+        <small id="riskDetail">--</small>
+      </article>
+    </section>
+
+    <section class="decision-layout">
+      <article class="panel hero-panel">
+        <div class="panel-head">
+          <div>
+            <h2>Forward State 2 Probability</h2>
+            <p id="horizonCaption">15 to 120 minute delivery horizon.</p>
+          </div>
+          <div id="overallSignal" class="signal-pill">--</div>
+        </div>
+        <div id="riskChart" class="chart large-chart"></div>
+      </article>
+
+      <article class="panel action-panel">
+        <div class="panel-head">
+          <div>
+            <h2>Portfolio Action</h2>
+            <p id="postureCaption">Balanced operating posture.</p>
+          </div>
+        </div>
+        <div id="actionBlock" class="action-block"></div>
+        <div id="reliabilityBlock" class="reliability-block"></div>
+      </article>
+    </section>
+
+    <section class="decision-layout lower-layout">
+      <article class="panel table-panel">
+        <div class="panel-head">
+          <div>
+            <h2>Interval Board</h2>
+            <p>Forecast snapshots at each delivery horizon.</p>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table id="intervalTable"></table>
+        </div>
+      </article>
+
+      <article class="panel">
+        <div class="panel-head">
+          <div>
+            <h2>Risk Mix</h2>
+            <p>Share of upcoming intervals by alert band.</p>
+          </div>
+        </div>
+        <div id="riskMix" class="risk-mix"></div>
+      </article>
+    </section>
+  </main>
+
+  <script src="data/results.js"></script>
+  <script src="operational.js"></script>
+</body>
+</html>
